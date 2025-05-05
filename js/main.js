@@ -22,10 +22,24 @@ function loadContacts() {
         .then((res) => res.json())
         .then((data) => {
             console.log("La API ha respondido: ", data)
+            printData(data)
         })
         .catch((error) => {
             console.log("Ha ocurrido un error: ", error)
         })
+}
+
+function printData(data) {
+    console.log("estas en print data: ",data)
+    const dataList = document.getElementById("list")
+
+    data.forEach(contact => {
+        dataList.innerHTML += `<div class="bg-white shadow rounded-xl px-4 py-2">
+            <h1 class="font-bold text-lg text-blue-800">${contact.name}</h1>
+            <p class="px-2 py-0.5 bg-indigo-700 w-fit rounded-full text-white">${contact.email}</p>
+            <p class="text-slate-700">${contact.phone}</p>
+        </div>`
+    });
 }
 
 loadContacts()
