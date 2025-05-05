@@ -36,12 +36,13 @@ function printData(data) {
     data.forEach(contact => {
         dataList.innerHTML += ` <div class="bg-white shadow rounded-xl px-4 py-2 flex justify-between">
             <div>
-                <h1 class="font-bold text-lg text-blue-800">${contact.name}</h1>
+                <h1 class="font-bold text-lg text-blue-800">${contact.id} - ${contact.name}</h1>
                 <p class="px-2 py-0.5 bg-indigo-700 w-fit rounded-full text-white">${contact.email}</p>
                 <p class="text-slate-700">${contact.phone}</p>
             </div>
             <div>
                 <button onclick="deleteContact('${contact.id}')" class="bg-red-200 hover:bg-red-500 rounded-lg px-4 py-2">Eliminar</button>
+                <a href="/new-contact.html?id=${contact.id}" class="bg-green-200 hover:bg-green-500 rounded-lg px-4 py-2">Editar</a>
             </div>
         </div>`
     });
