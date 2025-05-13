@@ -15,6 +15,7 @@ if(idEdit) {
 }
 
 function createContact() {
+
     const userId = localStorage.getItem("userId")
     const accessToken = localStorage.getItem("token")
 
@@ -23,7 +24,7 @@ function createContact() {
     const inName = document.getElementById("name")
     
     const requestOptions = {
-        method: "POST",
+        method: idEdit ? "PATCH" : "POST",
         headers: {
             "Content-Type": "application/json",
             "apiKey": apiKey,
@@ -37,11 +38,15 @@ function createContact() {
         })
     }
 
-    const url = baseUrl + "/rest/v1/contacts"
+    let url = baseUrl + "/rest/v1/contacts"
+    if(idEdit) {
+        //url = url + "?id=eq." + idEdit
+        url = `${url}?id=eq.${idEdit}`
+    }
 
     fetch(url, requestOptions)
         .then((response) => {
-            if(response.status == 201) {
+            if(response.status == 201 || response.status == 204) {
                 window.location.href = "index.html"
             }
         })
@@ -79,8 +84,4 @@ function getContact() {
         .catch((error) => {
             console.log(error)
         })
-}
-
-function updateContact() {
-    
 }
