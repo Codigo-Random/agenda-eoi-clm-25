@@ -9,7 +9,9 @@ if(idEdit) {
     document.getElementById("save").innerText = "Actualizar contacto"
 
     // 1. Obtener el contacto que estoy editando para rellenar los inputs
+    getContact()
     // 2. Actualizar el contacto 
+
 }
 
 function createContact() {
@@ -49,7 +51,34 @@ function createContact() {
 }
 
 function getContact() {
+    
+    const accessToken = localStorage.getItem("token")
+    
+    const requestOptions = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "apiKey": apiKey,
+            "Authorization": `Bearer ${accessToken}`
+        }
+    }
 
+    const url = baseUrl + "/rest/v1/contacts?id=eq." + idEdit
+
+    fetch(url, requestOptions)
+        .then((response) => {
+            return response.json()
+        })
+        .then((response) => {
+            console.log(response)
+            const contact = response[0]
+            document.getElementById("email").value = contact.email
+            document.getElementById("phone").value = contact.phone
+            document.getElementById("name").value = contact.name
+        })
+        .catch((error) => {
+            console.log(error)
+        })
 }
 
 function updateContact() {
